@@ -90,7 +90,7 @@
       </div>
     </header>
 
-    <!-- main -->
+    <!-- policy -->
     <section class="py-16 bg-white px-4 max-w-7xl mx-auto">
       <h2 class="text-3xl font-bold text-center mb-10">Why Choose US</h2>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -124,5 +124,83 @@
         </div>
       </div>
     </section>
+
+    <!-- main -->
+    <main id="products" class="max-w-7xl mx-auto py-12 px-4">
+      <h2 class="text-3xl font-bold text-center mb-8">Our Products</h2>
+      <div id="cat-container" class="flex flex-wrap justify-center gap-2 mb-10">
+        <button
+          onclick="loadProducts()"
+          class="btn btn-sm btn-primary category-btn"
+        >
+          All
+        </button>
+      </div>
+      <div id="loader" class="hidden text-center my-20">
+        <span class="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+      <div
+        id="product-grid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+      ></div>
+    </main>
+
+    <!-- footer -->
+    <footer class=""></footer>
+    <footer
+      class="footer sm:footer-horizontal bg-base-200 text-base-content p-10"
+    >
+      <aside>
+        <h2>SwiftCart</h2>
+        <p>
+          Your one-stop shop for all your fashion <br />and lifestyle needs.
+          Quality products,fast <br />
+          delivery, and excellent support.
+        </p>
+      </aside>
+      <nav>
+        <h6 class="footer-title">QUICK LINKS</h6>
+        <a class="link link-hover">Home</a>
+        <a class="link link-hover">Products</a>
+        <a class="link link-hover">About</a>
+        <a class="link link-hover">Contact</a>
+      </nav>
+      <nav>
+        <h6 class="footer-title">SUPPORT</h6>
+        <a class="link link-hover">FAQ</a>
+        <a class="link link-hover">Shipping</a>
+        <a class="link link-hover">Returns</a>
+        <a class="link link-hover">Privacy Policy</a>
+      </nav>
+
+      <form>
+        <h6 class="footer-title">Newsletter</h6>
+        <fieldset class="w-80">
+          <label
+            >The latest news,articles, and resources, <br />
+            sent to your inbox weekly</label
+          >
+          <div class="join mt-2">
+            <input
+              type="text"
+              placeholder="email.com"
+              class="input input-bordered join-item rounded-sm"
+            />
+            <button class="btn btn-primary join-item rounded-md ml-2">
+              Subscribe
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </footer>
+    <footer
+      class="footer bg-base-200 text-base-content border-base-300 border-t px-10 py-4"
+    >
+      <p>
+        SwiftCart
+        <br />
+        @2025 SwiftCart,Inc. All rights reserved.
+      </p>
+    </footer>
   </body>
 </html>
