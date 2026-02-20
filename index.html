@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SwiftCart E-Commerce</title>
-    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/index.css" />
     <!-- Daisy ui cdn -->
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@5"
@@ -24,7 +24,7 @@
   </head>
   <body>
     <!-- head -->
-    <nav class="flex justify-evenly max-w-7xl mx-auto px-2">
+    <nav class="flex justify-evenly max-w-7xl mx-auto p-2">
       <div class="navbar-start">
         <div class="dropdown">
           <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -45,7 +45,7 @@
           </div>
           <ul
             tabindex="-1"
-            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-30 mt-3 w-52 p-2 shadow font-bold"
           >
             <li><a>Home</a></li>
             <li><a>Products</a></li>
@@ -53,18 +53,23 @@
             <li><a>Contact</a></li>
           </ul>
         </div>
-        <a class="text-xl font-bold">SwiftCart</a>
+        <a class="text-xl text-primary font-bold">SwiftCart</a>
       </div>
       <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1">
+        <ul class="menu menu-horizontal px-1 font-bold">
           <li><a>Home</a></li>
           <li><a>Products</a></li>
           <li><a>About</a></li>
           <li><a>Contact</a></li>
         </ul>
       </div>
-      <div class="navbar-end">
-        <i class="fa-solid fa-cart-shopping"></i>
+      <div class="navbar-end relative">
+        <i class="fa-solid fa-cart-shopping text-xl"></i>
+        <span
+          id="cart-count"
+          class="badge badge-sm badge-primary absolute -top-1 -right-4"
+          >0</span
+        >
       </div>
     </nav>
 
@@ -127,10 +132,13 @@
 
     <!-- main -->
     <main id="products" class="max-w-7xl mx-auto py-12 px-4">
-      <h2 class="text-3xl font-bold text-center mb-8">Our Products</h2>
+      <h2 class="text-3xl font-bold mb-8">Trending Products</h2>
       <div id="cat-container" class="flex flex-wrap justify-center gap-2 mb-10">
         <button
-          onclick="loadProducts()"
+          onclick="
+            handleCategoryActive(this);
+            loadProducts();
+          "
           class="btn btn-sm btn-primary category-btn"
         >
           All
@@ -141,66 +149,88 @@
       </div>
       <div
         id="product-grid"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       ></div>
     </main>
 
     <!-- footer -->
-    <footer class=""></footer>
-    <footer
-      class="footer sm:footer-horizontal bg-base-200 text-base-content p-10"
-    >
-      <aside>
-        <h2>SwiftCart</h2>
-        <p>
-          Your one-stop shop for all your fashion <br />and lifestyle needs.
-          Quality products,fast <br />
-          delivery, and excellent support.
-        </p>
-      </aside>
-      <nav>
-        <h6 class="footer-title">QUICK LINKS</h6>
-        <a class="link link-hover">Home</a>
-        <a class="link link-hover">Products</a>
-        <a class="link link-hover">About</a>
-        <a class="link link-hover">Contact</a>
-      </nav>
-      <nav>
-        <h6 class="footer-title">SUPPORT</h6>
-        <a class="link link-hover">FAQ</a>
-        <a class="link link-hover">Shipping</a>
-        <a class="link link-hover">Returns</a>
-        <a class="link link-hover">Privacy Policy</a>
-      </nav>
+    <footer id="footer" class="bg-slate-900">
+      <footer
+        class="footer sm:footer-horizontal text-slate-300 p-4 max-w-7xl mx-auto"
+      >
+        <aside>
+          <h2 class="text-2xl font-bold text-primary">SwiftCart</h2>
+          <p>
+            Your one-stop shop for all your fashion <br />and lifestyle needs.
+            Quality products,fast <br />
+            delivery, and excellent support.
+          </p>
+        </aside>
+        <nav>
+          <h6 class="footer-title">QUICK LINKS</h6>
+          <a class="link link-hover">Home</a>
+          <a class="link link-hover">Products</a>
+          <a class="link link-hover">About</a>
+          <a class="link link-hover">Contact</a>
+        </nav>
+        <nav>
+          <h6 class="footer-title">SUPPORT</h6>
+          <a class="link link-hover">FAQ</a>
+          <a class="link link-hover">Shipping</a>
+          <a class="link link-hover">Returns</a>
+          <a class="link link-hover">Privacy Policy</a>
+        </nav>
 
-      <form>
-        <h6 class="footer-title">Newsletter</h6>
-        <fieldset class="w-80">
-          <label
-            >The latest news,articles, and resources, <br />
-            sent to your inbox weekly</label
-          >
-          <div class="join mt-2">
-            <input
-              type="text"
-              placeholder="email.com"
-              class="input input-bordered join-item rounded-sm"
-            />
-            <button class="btn btn-primary join-item rounded-md ml-2">
-              Subscribe
+        <form>
+          <h6 class="footer-title">Newsletter</h6>
+          <fieldset class="w-80">
+            <label
+              >The latest news,articles, and resources, <br />
+              sent to your inbox weekly</label
+            >
+            <div class="join mt-2">
+              <input
+                type="text"
+                placeholder="email.com"
+                class="input input-bordered join-item rounded-l-md text-black"
+              />
+              <button class="btn btn-primary join-item rounded-r-md">
+                Subscribe
+              </button>
+            </div>
+          </fieldset>
+        </form>
+      </footer>
+      <footer
+        class="footer text-slate-300 border-gray-700 border-t px-4 py-4 max-w-7xl mx-auto"
+      >
+        <p>
+          SwiftCart
+          <br />
+          @2025 SwiftCart,Inc. All rights reserved.
+        </p>
+      </footer>
+    </footer>
+
+    <!-- modal -->
+    <dialog id="details_modal" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box">
+        <div id="modal-content"></div>
+        <div class="modal-action">
+          <form method="dialog flex justify-evenly">
+            <button
+              type="button"
+              onclick="addToCart()"
+              class="btn btn-sm btn-primary flex-1"
+            >
+              Add to Cart
             </button>
-          </div>
-        </fieldset>
-      </form>
-    </footer>
-    <footer
-      class="footer bg-base-200 text-base-content border-base-300 border-t px-10 py-4"
-    >
-      <p>
-        SwiftCart
-        <br />
-        @2025 SwiftCart,Inc. All rights reserved.
-      </p>
-    </footer>
+            <button class="btn btn-sm">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="script.js"></script>
   </body>
 </html>
