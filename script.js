@@ -1,4 +1,5 @@
 let carCount = 0;
+let allProductsData = [];
 
 const loadCategories = async () => {
   const res = await fetch("https://fakestoreapi.com/products/categories");
@@ -18,25 +19,28 @@ const loadCategories = async () => {
   });
 };
 
-const loadProducts = async (category = "") => {
-  toggleLoader(true);
+const loadProducts = async (category = "", limit = null) => {
+  const targetId = limit ? "trending-grid" : "product-grid";
+  toggleLoader(true, targetId);
   const url = category
     ? `https://fakestoreapi.com/products/category/${category}`
     : `https://fakestoreapi.com/products`;
 
   const res = await fetch(url);
-  const products = await res.json();
-  displayProducts(products);
-  toggleLoader(false);
+  allProductsData = await res.json();
+  const displayData = limit ? allProductsData.slice(0, limit) : allProductsData;
+
+  displayProducts(displayData, targetId);
+  toggleLoader(false, targetId);
 };
 
-const displayProducts = (products) => {
-  const grid = document.getElementById("product-grid");
+const displayProducts = (products, targetId = "product-grid") => {
+  const grid = document.getElementById(targetId);
   grid.innerHTML = "";
   products.forEach((p) => {
     const card = document.createElement("div");
     card.className =
-      "card bg-base-100 shadow-sm border p-4 hover:shadow-md transition";
+      "card bg-base-100 shadow-sm border border-gray-100 p-4 hover:shadow-md transition";
     card.innerHTML = `<figure class="h-48">
         <img src="${p.image}" class="h-full object-contain" alt="${p.title}" />
       </figure>
@@ -58,6 +62,34 @@ const displayProducts = (products) => {
   });
 };
 
+function showAllProducts() {
+  const homeView = document.querySelector(".home-view");
+  const productsView = document.getElementById("products-view");
+  const viewAllBtn = document.getElementById("view-all");
+  const catContainer = document.getElementById("cat-container");
+
+  if (homeView) homeView.classList.add("hidden");
+  if (productsView) productsView.classList.remove("hidden");
+  if (viewAllBtn) viewAllBtn.classList.add("hidden");
+  if (catContainer) catContainer.classList.remove("hidden");
+
+  loadProducts();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function showHome() {
+  const homeView = document.querySelector(".home-view");
+  const productsView = document.getElementById("products-view");
+  const viewAllBtn = document.getElementById("view-all");
+  const catContainer = document.getElementById("cat-container");
+  if (homeView) homeView.classList.remove("hidden");
+  if (productsView) productsView.classList.add("hidden");
+  if (viewAllBtn) viewAllBtn.classList.remove("hidden");
+  if (catContainer) catContainer.classList.add("hidden");
+
+  loadProducts("", 3);
+  window.scrollTo(0, 0);
+}
+
 const showDetails = async (id) => {
   const res = await fetch(`https://fakestoreapi.com/products/${id}`);
   const p = await res.json();
@@ -72,9 +104,13 @@ const showDetails = async (id) => {
   details_modal.showModal();
 };
 
-function toggleLoader(show) {
-  document.getElementById("loader").classList.toggle("hidden", !show);
-  document.getElementById("product-grid").classList.toggle("hidden", show);
+function toggleLoader(show, gridId) {
+  const loaderId = gridId === "trending-grid" ? "loader" : "loader-products";
+  const loader = document.getElementById(loaderId);
+  const grid = document.getElementById(gridId);
+
+  if (loader) loader.classList.toggle("hidden", !show);
+  if (grid) grid.classList.toggle("hidden", show);
 }
 
 function handleCategoryActive(activeBtn) {
@@ -92,7 +128,8 @@ function handleCategoryActive(activeBtn) {
 function addToCart() {
   carCount++;
   document.getElementById("cart-count").innerText = carCount;
+  details_modal.close();
 }
 
 loadCategories();
-loadProducts();
+showHome();
